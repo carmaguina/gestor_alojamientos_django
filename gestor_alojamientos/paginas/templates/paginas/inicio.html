@@ -1,14 +1,17 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Inicio - Gestor de Alojamientos{% endblock %}
 
 {% block content %}
     <section class="hero">
-        <h2>Gestor de Alojamientos</h2>
+        <h2>
+            <span class="hero-logo" role="img" aria-label="Bermellón Suites"></span>
+        </h2>
 
         <p>
-            Consulta unidades disponibles, lee novedades del blog y administra
-            alojamientos turisticos desde un panel interno simple.
+            Gestión interna de reservas y disponibilidad de los cuatro
+            departamentos de Bermellón Suites, en Mar Azul.
         </p>
 
         <div class="card-grid">
@@ -16,12 +19,6 @@
                 <h3>Unidades</h3>
                 <p>Listado, detalle, busqueda y gestion de alojamientos.</p>
                 <a class="button" href="{% url 'alojamientos:unidad_list' %}">Ver unidades</a>
-            </article>
-
-            <article class="card">
-                <h3>Blog</h3>
-                <p>Publicaciones informativas sobre turismo y alojamientos.</p>
-                <a class="button" href="{% url 'blog:post_list' %}">Ver blog</a>
             </article>
 
             <article class="card">

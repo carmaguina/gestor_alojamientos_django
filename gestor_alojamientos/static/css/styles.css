@@ -1,46 +1,140 @@
+/* ==========================================================
+   Gestor de Alojamientos - Bermellon Suites
+   Tema OSCURO basado en "Web Bermellon a futuro":
+   fondo bordo oscuro, botones berme, Cormorant Garamond + Outfit.
+
+   Version clara anterior guardada en:
+   BACKUP_estilo_claro_2026-10-19 (para volver atras)
+   ========================================================== */
+
+:root {
+    /* Marca */
+    --berme: #B23A2A;
+    --berme-light: #D4503D;
+    --berme-dark: #7A2418;
+
+    /* Fondo de la pagina: degrade suave entre varios bordos oscuros */
+    --page-bg: linear-gradient(135deg,
+        #431209 0%,
+        #3D1009 35%,
+        #2D0C07 70%,
+        #220804 100%);
+
+    /* Fondos oscuros */
+    --bg-dark: #2A0A04;
+    --bg-darker: #1A0504;
+    --surface: #3D1009;          /* tarjetas, paneles, tablas, cabecera */
+    --surface-2: #4D1A10;        /* encabezados de tabla, elementos resaltados */
+
+    /* Textos sobre fondo oscuro */
+    --cream: #F7F3EE;            /* texto principal */
+    --muted: #BDB4AA;            /* texto secundario */
+    --line: rgba(247, 243, 238, 0.12);
+
+    /* Menu superior: barra clara, como en la web a futuro */
+    --nav-bg: #F2E9CC;           /* crema / amarillo pastel (igual que las tarjetas) */
+
+    /* Color del logo "Bermellon Suites" de la portada: rojo bermellon */
+    --logo-color: #B23A2A;
+
+    /* Tarjetas de la portada: crema / amarillo pastel */
+    --card-bg: #EBE0BC;
+    --card-text: #3D1009;
+    --card-text-soft: #7A6A62;
+    --nav-border: #E8E0D4;
+    --nav-text: #8A847C;
+    --nav-brand: #3D1009;
+
+    /* Estados utiles */
+    --ok: #7BD39A;
+
+    /* Colores de cada depto (propuesta, para el calendario) */
+    --depto-a: #8DB600;   /* verde manzana */
+    --depto-b: #7B4FA6;   /* violeta */
+    --depto-c: #D6336C;   /* rosa / fucsia */
+    --depto-d: #E8801A;   /* naranja */
+
+    /* Bordes redondeados */
+    --radius-sm: 8px;     /* botones, campos */
+    --radius-lg: 14px;    /* tarjetas, paneles, tablas */
+
+    /* Tipografias */
+    --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    --sans: 'Outfit', Arial, Helvetica, sans-serif;
+}
+
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #e9e9e6;
-    color: #333333;
+    min-height: 100vh;
+    font-family: var(--sans);
+    font-weight: 300;
+    background: var(--page-bg);
+    background-attachment: fixed;
+    color: var(--cream);
 }
 
 a {
-    color: #b81f2c;
+    color: var(--berme-light);
     text-decoration: none;
 }
 
 a:hover {
-    text-decoration: underline;
+    color: var(--cream);
 }
 
+/* ---------- Cabecera ---------- */
+
 .site-header {
-    background: #f7f6f2;
-    color: #555555;
-    border-bottom: 3px solid #b81f2c;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    background: var(--nav-bg);
+    color: var(--nav-text);
+    border-bottom: 1px solid var(--nav-border);
 }
 
 .topbar {
     max-width: 1120px;
     margin: 0 auto;
-    min-height: 92px;
+    min-height: 84px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    padding: 0 24px;
+    padding: 26px 24px;
+}
+
+/* Menu y datos de usuario apilados a la derecha; el nombre queda centrado en la altura total */
+.header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
 }
 
 .brand {
+    font-family: var(--serif);
     font-size: 30px;
-    font-weight: 700;
-    color: #c92331;
-    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--nav-brand);
+}
+
+.brand:hover {
+    color: var(--berme);
+}
+
+/* Logo "Bermellon Suites" pintado de un solo color (--logo-color).
+   Se usa la imagen como "mascara": solo importa su forma, no su color rojo. */
+.hero-logo {
+    display: block;
+    width: min(100%, 540px);
+    aspect-ratio: 1358 / 148;
+    margin: 0 auto;
+    background-color: var(--logo-color);
+    -webkit-mask: url('../img/logo-bermellon-suites.png') center / contain no-repeat;
+    mask: url('../img/logo-bermellon-suites.png') center / contain no-repeat;
 }
 
 .main-nav {
@@ -48,70 +142,89 @@ a:hover {
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-end;
-    gap: 14px;
+    gap: 28px;
 }
 
 .main-nav a {
-    color: #555555;
-    font-size: 16px;
-    font-weight: 700;
+    color: var(--nav-text);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.main-nav a:hover {
+    color: var(--berme);
 }
 
 .user-bar {
-    max-width: 1120px;
-    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 12px;
-    padding: 0 24px 16px;
-    font-size: 14px;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--nav-text);
 }
 
 .user-bar a {
-    color: #b81f2c;
-    font-weight: 700;
+    color: var(--berme);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+}
+
+.user-bar a:hover {
+    color: var(--berme-dark);
 }
 
 .logout-form {
     display: inline;
 }
 
+/* ---------- Contenido ---------- */
+
 .page {
     max-width: 1120px;
-    margin: 42px auto;
-    padding: 0 24px 44px;
+    margin: 48px auto;
+    padding: 0 24px 48px;
 }
 
 .page h2 {
-    color: #4d4d4d;
-    font-size: 34px;
-    margin: 0 0 22px;
+    font-family: var(--serif);
+    font-weight: 400;
+    color: var(--cream);
+    font-size: 40px;
+    line-height: 1.1;
+    margin: 0 0 24px;
 }
 
 .page > p {
-    color: #555555;
+    color: var(--muted);
     font-size: 17px;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 .hero {
     text-align: center;
-    padding: 38px 20px 36px;
+    padding: 12px 20px 40px;
 }
 
 .hero h2 {
-    color: #c92331;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 48px;
-    margin-bottom: 12px;
+    color: var(--cream);
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 60px;
+    line-height: 1;
+    margin-bottom: 28px;
 }
 
 .hero p {
-    color: #686868;
+    color: var(--muted);
     max-width: 760px;
-    margin: 0 auto 34px;
+    margin: 0 auto 64px;
+    line-height: 1.6;
 }
+
+/* ---------- Tarjetas y paneles ---------- */
 
 .card-grid {
     display: grid;
@@ -121,37 +234,59 @@ a:hover {
 }
 
 .card {
-    background: #faf9f6;
-    color: #333333;
-    border: 1px solid #dddddd;
-    border-top: 4px solid #b81f2c;
-    border-radius: 6px;
-    padding: 24px;
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.10);
+    background: var(--card-bg);
+    color: var(--card-text);
+    border: 1px solid var(--nav-border);
+    border-top: 3px solid var(--berme);
+    border-radius: 0;
+    padding: 26px;
+}
+
+/* Tarjetas de la portada: cuadradas, con el contenido centrado */
+.hero .card-grid {
+    grid-template-columns: repeat(2, minmax(0, 360px));
+    justify-content: center;
+}
+
+.hero .card {
+    aspect-ratio: 4 / 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .card h3,
 .card h4 {
     margin-top: 0;
-    color: #4d4d4d;
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 27px;
+    color: var(--card-text);
 }
 
 .card p {
-    color: #666666;
-    line-height: 1.45;
+    color: var(--card-text-soft);
+    font-size: 17px;
+    line-height: 1.55;
 }
 
 .panel {
-    background: #faf9f6;
-    border-radius: 6px;
-    padding: 24px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 28px;
 }
 
 .panel h3 {
     margin-top: 0;
-    font-size: 26px;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 30px;
+    color: var(--cream);
 }
+
+/* ---------- Formularios ---------- */
 
 .search-row {
     display: flex;
@@ -164,10 +299,31 @@ textarea,
 select {
     width: 100%;
     max-width: 520px;
-    padding: 9px 10px;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
+    padding: 11px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: rgba(247, 243, 238, 0.06);
+    color: var(--cream);
     font: inherit;
+    font-weight: 300;
+    color-scheme: dark;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--muted);
+}
+
+select option {
+    background: var(--surface);
+    color: var(--cream);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--berme-light);
 }
 
 textarea {
@@ -178,56 +334,117 @@ textarea {
     max-width: none;
 }
 
+.form-card {
+    max-width: 620px;
+    margin: 0 auto;
+}
+
+.form-card form p {
+    margin-bottom: 18px;
+}
+
+.form-card label {
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+
+/* ---------- Botones ---------- */
+
 .button,
 button,
 input[type="submit"] {
     display: inline-block;
     border: 0;
-    border-radius: 4px;
-    background: #b81f2c;
-    color: white;
-    padding: 9px 15px;
-    font-weight: 700;
+    border-radius: 0;
+    background: var(--berme);
+    color: var(--cream);
+    padding: 11px 24px;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     cursor: pointer;
+    transition: background 0.3s;
 }
 
 .button:hover,
-button:hover {
-    background: #941824;
-    text-decoration: none;
+button:hover,
+input[type="submit"]:hover {
+    background: var(--berme-light);
+    color: var(--cream);
 }
 
+/* Boton secundario: solo contorno, como "Consultar disponibilidad" */
 .button-secondary {
-    background: #6d6d6d;
+    background: transparent;
+    border: 1px solid rgba(247, 243, 238, 0.35);
+    color: var(--cream);
+}
+
+.button-secondary:hover {
+    background: rgba(247, 243, 238, 0.10);
+    border-color: var(--cream);
 }
 
 .button-danger {
-    background: #941824;
+    background: var(--berme-dark);
+}
+
+.button-danger:hover {
+    background: var(--berme);
 }
 
 .button-warning {
-    background: #d7d7d7;
-    color: #333333;
+    background: transparent;
+    border: 1px solid rgba(247, 243, 238, 0.35);
+    color: var(--cream);
 }
+
+.button-warning:hover {
+    background: rgba(247, 243, 238, 0.10);
+    color: var(--cream);
+}
+
+/* ---------- Tablas ---------- */
 
 .table {
     width: 100%;
-    border-collapse: collapse;
-    background: #faf9f6;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
 }
 
 .table th,
 .table td {
-    padding: 12px 14px;
-    border-bottom: 1px solid #e5e8ef;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
     text-align: left;
 }
 
-.table th {
-    background: #efeee9;
-    color: #444444;
-    border-bottom: 2px solid #b81f2c;
+.table tr:last-child td {
+    border-bottom: 0;
 }
+
+.table th {
+    background: var(--surface-2);
+    color: var(--cream);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--berme);
+}
+
+/* ---------- Varios ---------- */
 
 .actions {
     display: flex;
@@ -238,31 +455,102 @@ button:hover {
 
 .messages {
     padding-left: 20px;
-    color: #1f7a3f;
-    font-weight: 700;
+    color: var(--ok);
+    font-weight: 400;
 }
 
 .empty {
-    color: #666;
+    color: var(--muted);
     font-style: italic;
-}
-
-.form-card {
-    max-width: 620px;
-    margin: 0 auto;
-}
-
-.form-card form p {
-    margin-bottom: 16px;
-}
-
-.form-card label {
-    display: block;
-    font-weight: 700;
-    margin-bottom: 6px;
 }
 
 .detail-list p {
     font-size: 17px;
-    line-height: 1.5;
+    line-height: 1.6;
+}
+
+/* ---------- Pantallas chicas ---------- */
+
+@media (max-width: 720px) {
+    .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+
+    .header-right {
+        align-items: flex-start;
+    }
+
+    .main-nav {
+        justify-content: flex-start;
+        gap: 18px;
+    }
+
+    .user-bar {
+        justify-content: flex-start;
+    }
+
+    .hero h2 {
+        font-size: 42px;
+    }
+
+    .hero p {
+        margin-bottom: 36px;
+    }
+
+    /* Las tarjetas de la portada siguen una al lado de la otra: se achican */
+    .hero .card-grid {
+        gap: 12px;
+    }
+
+    .hero .card {
+        padding: 14px;
+    }
+
+    .hero .card h3 {
+        font-size: 22px;
+    }
+
+    .hero .card p {
+        font-size: 14px;
+    }
+
+    .hero .card .button {
+        padding: 10px 14px;
+        font-size: 11px;
+    }
+}
+
+/* Celulares (pantalla angosta Y tactil): las tarjetas se apilan, una debajo
+   de la otra. En la PC, aunque achiques la ventana, siguen lado a lado. */
+@media (max-width: 480px) and (pointer: coarse) {
+    .hero {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .hero .card-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .hero .card {
+        aspect-ratio: auto;
+        padding: 24px;
+    }
+
+    .hero .card h3 {
+        font-size: 24px;
+    }
+
+    .hero .card p {
+        font-size: 15px;
+    }
+
+    .hero .card .button {
+        padding: 11px 22px;
+        font-size: 12px;
+    }
 }

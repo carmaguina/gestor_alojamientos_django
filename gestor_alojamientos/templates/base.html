@@ -5,35 +5,41 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Gestor de Alojamientos{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <header class="site-header">
         <div class="topbar">
             <a class="brand" href="{% url 'paginas:inicio' %}">Gestor de Alojamientos</a>
-            <nav class="main-nav">
-                <a href="{% url 'paginas:inicio' %}">Inicio</a>
-                <a href="{% url 'alojamientos:unidad_list' %}">Unidades</a>
-                <a href="{% url 'blog:post_list' %}">Blog</a>
-                <a href="{% url 'paginas:acerca' %}">Acerca de</a>
-                <a href="{% url 'paginas:contacto' %}">Contacto</a>
-                <a href="/admin/">Admin</a>
-            </nav>
-        </div>
+            <div class="header-right">
+                <nav class="main-nav">
+                    <a href="{% url 'paginas:inicio' %}">Inicio</a>
+                    <a href="{% url 'alojamientos:unidad_list' %}">Unidades</a>
+                    <a href="{% url 'paginas:acerca' %}">Acerca de</a>
+                    <a href="{% url 'paginas:contacto' %}">Contacto</a>
+                    {% if user.is_staff %}
+                        <a href="/admin/">Admin</a>
+                    {% endif %}
+                </nav>
 
-        <div class="user-bar">
-            {% if user.is_authenticated %}
-                <span>Hola, {{ user.username }}</span>
-                <a href="{% url 'usuarios:perfil' %}">Mi perfil</a>
+                <div class="user-bar">
+                    {% if user.is_authenticated %}
+                        <span>Hola, {{ user.username }}</span>
+                        <a href="{% url 'usuarios:perfil' %}">Mi perfil</a>
 
-                <form class="logout-form" method="post" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button type="submit">Cerrar sesion</button>
-                </form>
-            {% else %}
-                <a href="{% url 'login' %}">Iniciar sesion</a>
-                <a href="{% url 'usuarios:registro' %}">Registrarse</a>
-            {% endif %}
+                        <form class="logout-form" method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit">Cerrar sesion</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login' %}">Iniciar sesion</a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </header>
 
