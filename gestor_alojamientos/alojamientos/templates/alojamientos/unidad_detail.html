@@ -9,6 +9,8 @@
     <div class="detail-list">
         <p><strong>Descripcion:</strong> {{ unidad.descripcion }}</p>
         <p><strong>Capacidad:</strong> {{ unidad.capacidad }}</p>
+        <p><strong>Ubicación:</strong> {% if unidad.planta_baja %}Planta baja{% else %}Planta alta (por escalera){% endif %}</p>
+        <p><strong>Deck privado:</strong> {% if unidad.tiene_deck %}Sí{% else %}No{% endif %}</p>
         <p>
             <strong>Estado:</strong>
             {% if unidad.activa %}

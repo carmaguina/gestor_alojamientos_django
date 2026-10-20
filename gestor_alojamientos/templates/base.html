@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <header class="site-header">
+    <header class="site-header {% block header_class %}{% endblock %}">
         <div class="topbar">
             <a class="brand" href="{% url 'paginas:inicio' %}">Gestor de Alojamientos</a>
             <div class="header-right">
@@ -23,7 +23,8 @@
                     <a href="{% url 'paginas:acerca' %}">Acerca de</a>
                     <a href="{% url 'paginas:contacto' %}">Contacto</a>
                     {% if user.is_staff %}
-                        <a href="/admin/">Admin</a>
+                        <a href="{% url 'reservas:disponibilidad' %}">Disponibilidad</a>
+                        <a href="{% url 'admin:reservas_reserva_changelist' %}">Reservas</a>
                     {% endif %}
                 </nav>
 
@@ -44,7 +45,7 @@
         </div>
     </header>
 
-    <main class="page">
+    <main class="{% block main_class %}page{% endblock %}">
         {% url 'paginas:inicio' as inicio_url %}
         {% if request.path != inicio_url %}
             <a class="back-link" href="{{ inicio_url }}" onclick="if (history.length > 1) { history.back(); return false; }">&larr; Volver</a>
@@ -52,5 +53,51 @@
 
         {% block content %}{% endblock %}
     </main>
+
+    <footer class="pie">
+        <div class="pie-interior">
+            <div class="pie-marca">
+                <img class="pie-logo" src="{% static 'img/calcomania-bermellon-360.png' %}" alt="Bermellón Suites, Mar Azul">
+            </div>
+
+            <div class="pie-datos">
+                <p class="pie-titulo">Dónde estamos</p>
+                <p class="pie-direccion">
+                    Av. Gral. San Martín (calle 34) Nº 250<br>
+                    Entre Mar del Plata y Punta del Este<br>
+                    Mar Azul, Partido de Villa Gesell, Prov. de Buenos Aires
+                </p>
+                <ul class="pie-redes">
+                    <li><a href="https://wa.me/541164966640" target="_blank" rel="noopener">WhatsApp</a></li>
+                    <li><a href="https://www.instagram.com/bermellonsuites/" target="_blank" rel="noopener">Instagram</a></li>
+                    <li><a href="https://www.facebook.com/bermellonsuites/" target="_blank" rel="noopener">Facebook</a></li>
+                    <li><a href="mailto:bermellon.suites@gmail.com">Mail</a></li>
+                </ul>
+            </div>
+
+            <nav class="pie-menu" aria-label="Menú del pie de página">
+                <p class="pie-titulo">Navegá</p>
+                <a href="{% url 'paginas:inicio' %}">Inicio</a>
+                <a href="{% url 'alojamientos:unidad_list' %}">Unidades</a>
+                <a href="{% url 'paginas:acerca' %}">Acerca de</a>
+                <a href="{% url 'paginas:contacto' %}">Contacto</a>
+            </nav>
+        </div>
+
+        <p class="pie-copy">Copyright © {% now "Y" %} Bermellón Suites · Mar Azul</p>
+    </footer>
+
+    <script>
+        // En la portada el menu arranca transparente y oscuro; al bajar pasa a su version clara.
+        (function () {
+            var header = document.querySelector('.site-header.header-hero');
+            if (!header) { return; }
+            function actualizar() {
+                header.classList.toggle('scrolled', window.scrollY > 40);
+            }
+            actualizar();
+            window.addEventListener('scroll', actualizar, { passive: true });
+        })();
+    </script>
 </body>
 </html>

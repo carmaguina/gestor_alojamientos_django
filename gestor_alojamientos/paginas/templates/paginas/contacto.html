@@ -13,12 +13,45 @@
         </ul>
     {% endif %}
 
-    <section class="panel form-card">
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
+    <div class="contacto-grid">
 
-            <button type="submit">Enviar mensaje</button>
-        </form>
-    </section>
+        <!-- Columna izquierda: formulario -->
+        <section class="panel panel-rojo form-card form-izquierda">
+            <h3>Escribinos</h3>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button type="submit">Enviar mensaje</button>
+            </form>
+        </section>
+
+        <!-- Columna derecha: datos, horarios y mapa -->
+        <section class="panel panel-rojo contacto-info">
+            <h3>Cómo llegar</h3>
+            <p>
+                Centro Comercial de Las Gaviotas y Mar Azul, a 250 m de la playa.
+            </p>
+
+            <iframe
+                class="mapa"
+                title="Ubicación de Bermellón Suites en Mar Azul"
+                src="https://maps.google.com/maps?q=bermell%C3%B3n%20suites%2C%20mar%20azul&t=m&z=14&output=embed&iwloc=near"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+            <h3>Contacto directo</h3>
+            <ul class="contacto-datos">
+                <li><strong>WhatsApp:</strong> <a href="https://wa.me/541164966640" target="_blank" rel="noopener">+54 11 6496-6640</a></li>
+                <li><strong>Mail:</strong> <a href="mailto:bermellon.suites@gmail.com">bermellon.suites@gmail.com</a></li>
+            </ul>
+
+            <h3>Horarios</h3>
+            <ul class="contacto-datos">
+                <li><strong>Check-in:</strong> de 15 a 18 hs</li>
+                <li><strong>Check-out:</strong> hasta las 10 hs</li>
+            </ul>
+        </section>
+
+    </div>
 {% endblock %}

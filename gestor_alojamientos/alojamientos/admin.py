@@ -11,7 +11,7 @@ def marcar_como_inactivas(modeladmin, request, queryset):
     queryset.update(activa=False)
 
 class UnidadAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'capacidad', 'activa')
+    list_display = ('nombre', 'capacidad', 'activa', 'planta_baja', 'tiene_deck', 'color')
     search_fields = ('nombre', )
     list_filter = ('activa', 'capacidad')
     actions = [marcar_como_activas, marcar_como_inactivas]

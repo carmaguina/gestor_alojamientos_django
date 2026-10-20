@@ -34,7 +34,7 @@ class UnidadDetailView(DetailView):
 class UnidadCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = "alojamientos.add_unidad"
     model = Unidad
-    fields = ["nombre", "descripcion", "capacidad", "activa"]
+    fields = ["nombre", "descripcion", "capacidad", "activa", "planta_baja", "tiene_deck", "color"]
     template_name = "alojamientos/unidad_form.html"
     success_url = reverse_lazy("alojamientos:unidad_list")
 
@@ -42,7 +42,7 @@ class UnidadCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 class UnidadUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = "alojamientos.change_unidad"
     model = Unidad
-    fields = ["nombre", "descripcion", "capacidad", "activa"]
+    fields = ["nombre", "descripcion", "capacidad", "activa", "planta_baja", "tiene_deck", "color"]
     template_name = "alojamientos/unidad_form.html"
     success_url = reverse_lazy("alojamientos:unidad_list")
 

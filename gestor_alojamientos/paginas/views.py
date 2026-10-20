@@ -1,12 +1,16 @@
 from django.contrib import messages
 from django.shortcuts import redirect, render
 
+from alojamientos.models import Unidad
+
 from .forms import ContactoForm
 from .models import MensajeContacto
 
 
 def inicio(request):
-    return render(request, 'paginas/inicio.html')
+    # Los departamentos activos se muestran en la seccion "Departamentos" de la portada
+    unidades = Unidad.objects.filter(activa=True).order_by('nombre')
+    return render(request, 'paginas/inicio.html', {'unidades': unidades})
 
 
 def acerca(request):

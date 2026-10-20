@@ -3,29 +3,135 @@
 
 {% block title %}Inicio - Bermellón Suites{% endblock %}
 
+{# En la portada el menu es transparente al comienzo y la pagina ocupa todo el ancho #}
+{% block header_class %}header-hero{% endblock %}
+{% block main_class %}home{% endblock %}
+
 {% block content %}
-    <section class="hero">
-        <h2>
-            <span class="hero-logo" role="img" aria-label="Bermellón Suites"></span>
-        </h2>
 
-        <p>
-            Bienvenidos a Bermellón Suites, tu rincón para descansar en Mar Azul,
-            a solo 250 m de la playa.
-        </p>
+    <!-- ======== PORTADA ======== -->
+    <section id="portada" class="portada">
+        <div class="portada-contenido">
+            <h1 class="portada-logo">
+                <span class="hero-logo" role="img" aria-label="Bermellón Suites"></span>
+            </h1>
 
-        <div class="card-grid">
-            <article class="card">
-                <h3>Unidades</h3>
-                <p>Conocé los cuatro departamentos, sus comodidades y su capacidad.</p>
-                <a class="button" href="{% url 'alojamientos:unidad_list' %}">Ver unidades</a>
-            </article>
+            <p class="portada-frase">
+                Bienvenidos a Bermellón Suites, tu rincón para descansar en Mar Azul,
+                a solo 250 m de la playa.
+            </p>
 
-            <article class="card">
-                <h3>Contacto</h3>
-                <p>Escribinos para consultar disponibilidad y tarifas.</p>
-                <a class="button" href="{% url 'paginas:contacto' %}">Contactar</a>
-            </article>
+            <div class="portada-acciones">
+                <a class="button" href="#departamentos">Ver departamentos</a>
+                <a class="button button-secondary" href="#contacto">Contacto</a>
+            </div>
+        </div>
+
+        <a class="portada-flecha" href="#departamentos" aria-label="Bajar">&#8595;</a>
+    </section>
+
+    <!-- ======== DEPARTAMENTOS ======== -->
+    <section id="departamentos" class="seccion seccion-clara">
+        <div class="seccion-interior">
+            <p class="seccion-etiqueta">Alojamiento</p>
+            <h2 class="seccion-titulo">Nuestros <em>departamentos</em></h2>
+            <p class="seccion-texto">
+                Cuatro departamentos de 50 m², para hasta 4 personas cada uno, con todo el
+                equipamiento necesario para una estadía perfecta.
+            </p>
+
+            <div class="unidades-grid">
+                {% for unidad in unidades %}
+                    <article class="unidad-tarjeta">
+                        <header>
+                            <span class="punto-color" style="background: {{ unidad.color }};"></span>
+                            <h3>{{ unidad.nombre }}</h3>
+                        </header>
+                        <p class="unidad-datos">
+                            {% if unidad.planta_baja %}Planta baja{% else %}Planta alta{% endif %}
+                            · {% if unidad.tiene_deck %}con deck privado{% else %}sin deck{% endif %}
+                        </p>
+                        <p class="unidad-datos">Hasta {{ unidad.capacidad }} personas</p>
+                        <a class="unidad-link" href="{% url 'alojamientos:unidad_detail' unidad.pk %}">Ver detalle &rarr;</a>
+                    </article>
+                {% empty %}
+                    <p class="empty">Todavía no hay departamentos cargados.</p>
+                {% endfor %}
+            </div>
         </div>
     </section>
+
+    <!-- ======== EL COMPLEJO ======== -->
+    <section id="complejo" class="seccion seccion-oscura">
+        <div class="seccion-interior">
+            <p class="seccion-etiqueta">El complejo</p>
+            <h2 class="seccion-titulo">A pasos del <em>mar</em></h2>
+            <p class="seccion-texto">
+                Bermellón Suites se encuentra en el Centro Comercial de Las Gaviotas y Mar Azul,
+                a tan solo 250 m de la playa. Cada departamento tiene una habitación con cama
+                matrimonial y dos camas individuales en la sala comedor, además de parrillas y
+                espacios verdes para disfrutar en el complejo.
+            </p>
+
+            <ul class="destacados">
+                <li>Internet fibra óptica</li>
+                <li>Cochera semi-cubierta</li>
+                <li>Aire acondicionado frío-calor</li>
+                <li>Cocina equipada</li>
+                <li>Parrillas de uso compartido</li>
+                <li>Aceptamos mascotas</li>
+            </ul>
+
+            <a class="button button-secondary" href="{% url 'paginas:acerca' %}">Conocer más</a>
+        </div>
+    </section>
+
+    <!-- ======== OPINIONES ======== -->
+    <section id="opiniones" class="seccion seccion-clara">
+        <div class="seccion-interior">
+            <p class="seccion-etiqueta">Opiniones</p>
+            <h2 class="seccion-titulo">Lo que dicen <em>nuestros huéspedes</em></h2>
+            <p class="seccion-texto">
+                Excelente: 5 estrellas, a base de 10 reseñas en Google.
+            </p>
+
+            <div class="opiniones-grid">
+                <blockquote class="opinion">
+                    <p class="opinion-estrellas" aria-label="5 estrellas">★★★★★</p>
+                    <p>Excelente estadía. Todo impecable. Limpieza, atención, ubicación. Lo recomiendo.</p>
+                    <footer>Mercedes B. · enero 2026</footer>
+                </blockquote>
+
+                <blockquote class="opinion">
+                    <p class="opinion-estrellas" aria-label="5 estrellas">★★★★★</p>
+                    <p>Muy buena atención. Las dueñas siempre atentas y amables. La ubicación excelente. Los servicios muy buenos. ¡Fuimos dos veces y volveremos!</p>
+                    <footer>Georgina B. · enero 2026</footer>
+                </blockquote>
+
+                <blockquote class="opinion">
+                    <p class="opinion-estrellas" aria-label="5 estrellas">★★★★★</p>
+                    <p>Muy cómodo y limpio. Excelente la atención de Marcela.</p>
+                    <footer>Soledad G. · enero 2025</footer>
+                </blockquote>
+            </div>
+
+            <p class="opiniones-mas">
+                <a class="button" target="_blank" rel="noopener"
+                   href="https://www.google.com/maps/search/?api=1&query=Bermell%C3%B3n+Suites+Mar+Azul">Ver todas las opiniones en Google</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- ======== CONTACTO ======== -->
+    <section id="contacto" class="seccion seccion-arena">
+        <div class="seccion-interior">
+            <p class="seccion-etiqueta">Contacto</p>
+            <h2 class="seccion-titulo">¿Querés <em>consultar</em>?</h2>
+            <p class="seccion-texto">
+                Escribinos para consultar disponibilidad y tarifas. Te respondemos a la brevedad.
+            </p>
+            <a class="button" href="{% url 'paginas:contacto' %}">Enviar una consulta</a>
+        </div>
+    </section>
+
 {% endblock %}

@@ -26,19 +26,22 @@
     --surface: #3D1009;          /* tarjetas, paneles, tablas, cabecera */
     --surface-2: #4D1A10;        /* encabezados de tabla, elementos resaltados */
 
+    /* Texto oscuro, para usar sobre recuadros claros */
+    --charcoal: #3D1009;
+
     /* Textos sobre fondo oscuro */
     --cream: #F7F3EE;            /* texto principal */
     --muted: #BDB4AA;            /* texto secundario */
     --line: rgba(247, 243, 238, 0.12);
 
     /* Menu superior: barra clara, como en la web a futuro */
-    --nav-bg: #F2E9CC;           /* crema / amarillo pastel (igual que las tarjetas) */
+    --nav-bg: #F7F3EE;           /* crema claro (el mismo de las secciones y los recuadros) */
 
     /* Color del logo "Bermellon Suites" de la portada: rojo bermellon */
     --logo-color: #B23A2A;
 
     /* Tarjetas de la portada: crema / amarillo pastel */
-    --card-bg: #EBE0BC;
+    --card-bg: #F7F3EE;
     --card-text: #3D1009;
     --card-text-soft: #7A6A62;
     --nav-border: #E8E0D4;
@@ -89,9 +92,38 @@ a:hover {
 /* ---------- Cabecera ---------- */
 
 .site-header {
+    position: sticky;           /* el menu queda fijo arriba al hacer scroll */
+    top: 0;
+    z-index: 100;
     background: var(--nav-bg);
     color: var(--nav-text);
     border-bottom: 1px solid var(--nav-border);
+    transition: background 0.35s, border-color 0.35s;
+}
+
+/* En la portada: el menu flota sobre la imagen, transparente y con letras claras,
+   hasta que se baja (la clase "scrolled" la agrega un pequeno script en base.html). */
+.site-header.header-hero {
+    position: fixed;
+    left: 0;
+    right: 0;
+}
+
+.site-header.header-hero:not(.scrolled) {
+    background: transparent;
+    border-bottom-color: transparent;
+}
+
+.header-hero:not(.scrolled) .brand,
+.header-hero:not(.scrolled) .main-nav a,
+.header-hero:not(.scrolled) .user-bar,
+.header-hero:not(.scrolled) .user-bar a {
+    color: var(--cream);
+}
+
+.header-hero:not(.scrolled) .main-nav a:hover,
+.header-hero:not(.scrolled) .user-bar a:hover {
+    color: var(--berme-light);
 }
 
 .topbar {
@@ -222,6 +254,154 @@ a:hover {
     max-width: 760px;
     margin: 0 auto 64px;
     line-height: 1.6;
+}
+
+/* ---------- Buscador de disponibilidad ---------- */
+
+.buscador {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 20px;
+    align-items: flex-end;
+}
+
+.buscador label {
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+
+.buscador-campo input {
+    width: 190px;
+}
+
+.buscador-corto input {
+    width: 110px;
+}
+
+.buscador-opciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    flex-basis: 100%;
+}
+
+.buscador-opciones label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: 14px;
+    color: var(--cream);
+}
+
+.buscador-opciones input {
+    width: auto;
+}
+
+.errorlist {
+    margin: 6px 0 0;
+    padding: 0;
+    list-style: none;
+    color: #FF9A8A;
+    font-size: 13px;
+}
+
+.resumen-busqueda {
+    margin: 26px 0 16px;
+    font-size: 17px;
+}
+
+.resultados {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+.resultado {
+    background: #F7F3EE;            /* crema claro */
+    color: var(--charcoal);
+    border: 1px solid #E8E0D4;
+    border-left-width: 6px;
+    border-radius: var(--radius-lg);
+    padding: 20px 22px;
+}
+
+.resultado header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 10px;
+}
+
+.resultado h3 {
+    margin: 0;
+    flex: 1;
+    min-width: 150px;
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 22px;
+    white-space: nowrap;
+    color: var(--charcoal);
+}
+
+.punto-color {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.etiqueta {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+}
+
+.resultado-libre { border-left-color: #4CAF72; }
+.resultado-ocupado { border-left-color: var(--berme); }
+.resultado-cerrado { border-left-color: #8A847C; }
+.resultado-descartado { border-left-color: #D5CCC0; opacity: 0.6; }
+
+.etiqueta-libre { background: #4CAF72; color: #0F2A1A; }
+.etiqueta-ocupado { background: var(--berme); color: #fff; }
+.etiqueta-cerrado { background: #8A847C; color: #fff; }
+.etiqueta-descartado { background: transparent; border: 1px solid #B3A99C; color: #6B645C; }
+
+.resultado-datos {
+    margin: 10px 0 12px;
+    color: #7A6A62;
+    font-size: 14px;
+}
+
+.resultado .aviso {
+    color: #8A5A00;
+}
+
+.resultado-motivo {
+    margin: 6px 0;
+    font-size: 15px;
+    color: var(--charcoal);
+}
+
+.aviso {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #F2D98A;
+}
+
+.resultado .button {
+    margin-top: 12px;
 }
 
 /* ---------- Boton "Volver" ---------- */
@@ -357,6 +537,101 @@ textarea {
 .form-card {
     max-width: 620px;
     margin: 0 auto;
+}
+
+/* Pagina de Contacto: formulario a la izquierda, datos y mapa a la derecha */
+.contacto-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 24px;
+    align-items: stretch;      /* los dos recuadros miden lo mismo de alto */
+}
+
+.contacto-grid .panel {
+    padding: 36px 40px;
+}
+
+/* El formulario se estira para llenar el recuadro: el mensaje crece y el boton queda abajo */
+.contacto-grid .form-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.contacto-grid .form-card form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.contacto-grid .form-card form p:last-of-type {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.contacto-grid .form-card form p:last-of-type textarea {
+    flex: 1;
+    min-height: 160px;
+}
+
+.contacto-grid .form-card form button {
+    align-self: flex-start;
+}
+
+.contacto-info h3 {
+    margin: 26px 0 10px;
+}
+
+.contacto-info h3:first-child {
+    margin-top: 0;
+}
+
+.contacto-info p {
+    text-align: left;
+    margin: 0 0 16px;
+}
+
+.mapa {
+    width: 100%;
+    height: 280px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    filter: grayscale(0.25);
+}
+
+.contacto-datos {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    line-height: 2;
+}
+
+.contacto-datos a {
+    color: var(--cream);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+@media (max-width: 860px) {
+    .contacto-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contacto-grid .panel {
+        padding: 28px 22px;
+    }
+}
+
+/* Formulario de Contacto: ocupa todo el ancho, como la pagina "Acerca de" */
+.form-card.form-izquierda {
+    max-width: none;
+    margin: 0;
+}
+
+.form-card.form-izquierda input,
+.form-card.form-izquierda textarea,
+.form-card.form-izquierda select {
+    max-width: none;
 }
 
 .form-card form p {
@@ -501,6 +776,77 @@ input[type="submit"]:hover {
     line-height: 1.7;
 }
 
+/* Variantes de recuadro para la pagina "Acerca de": rojo bermellon y crema */
+.panel-rojo {
+    /* Bordo elegido: un paso del fondo oscuro hacia el bermellon (Acerca de y Contacto) */
+    background: #641E14;
+    border-color: rgba(247, 243, 238, 0.14);
+    color: var(--cream);
+    padding: 40px 48px;          /* mas aire adentro del recuadro */
+}
+
+/* Texto justificado dentro de estos recuadros */
+.panel-rojo p {
+    text-align: justify;
+}
+
+/* ...pero los campos de un formulario van alineados a la izquierda */
+.panel-rojo form p {
+    text-align: left;
+}
+
+/* Etiquetas, ayudas y mensajes del formulario: mismo color de letra que el resto del recuadro */
+.panel-rojo.form-card label,
+.panel-rojo.form-card .helptext,
+.panel-rojo.form-card input,
+.panel-rojo.form-card textarea,
+.panel-rojo.form-card select {
+    color: var(--cream);
+}
+
+/* Buscador de disponibilidad dentro del recuadro bordo */
+.panel-rojo .buscador label,
+.panel-rojo .buscador input,
+.panel-rojo .buscador-opciones label {
+    color: var(--cream);
+}
+
+.panel-rojo.form-card input::placeholder,
+.panel-rojo.form-card textarea::placeholder {
+    color: rgba(247, 243, 238, 0.6);
+}
+
+/* Listas "hacia abajo": una sola columna */
+.lista-vertical {
+    margin: 0;
+    padding-left: 22px;
+    line-height: 2;
+}
+
+@media (max-width: 640px) {
+    .panel-rojo {
+        padding: 28px 22px;
+    }
+}
+
+.panel-rojo h3,
+.panel-rojo p,
+.panel-rojo li {
+    color: var(--cream);
+}
+
+.panel-crema {
+    background: var(--nav-bg);
+    border-color: var(--nav-border);
+    color: var(--charcoal);
+}
+
+.panel-crema h3,
+.panel-crema p,
+.panel-crema li {
+    color: var(--charcoal);
+}
+
 @media (max-width: 640px) {
     .lista-columnas {
         columns: 1;
@@ -510,6 +856,338 @@ input[type="submit"]:hover {
 .detail-list p {
     font-size: 17px;
     line-height: 1.6;
+}
+
+/* ---------- Portada con secciones (pagina de inicio) ---------- */
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* La portada ocupa todo el ancho: sin el recuadro central de las otras paginas */
+main.home {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+.portada {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 130px 24px 90px;
+    background:
+        radial-gradient(ellipse at center bottom, rgba(178, 58, 42, 0.22) 0%, transparent 65%),
+        linear-gradient(160deg, #2A0A04 0%, #3D1009 45%, #1A0504 100%);
+}
+
+.portada-contenido {
+    max-width: 760px;
+}
+
+.portada-logo {
+    margin: 0 0 22px;
+}
+
+.portada-frase {
+    margin: 0 auto;
+    max-width: 620px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--muted);
+}
+
+.portada-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 38px;
+}
+
+.portada-flecha {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 22px;
+    color: rgba(247, 243, 238, 0.5);
+    animation: flechaRebote 2s ease-in-out infinite;
+}
+
+@keyframes flechaRebote {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(7px); }
+}
+
+.seccion {
+    padding: 100px 24px;
+    scroll-margin-top: 80px;
+}
+
+.seccion-interior {
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+.seccion-clara { background: #F7F3EE; color: var(--charcoal); }
+.seccion-oscura { background: #2D0C07; color: var(--cream); }
+.seccion-arena { background: #E8E0D4; color: var(--charcoal); }
+
+.seccion-etiqueta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 18px;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--berme);
+}
+
+.seccion-etiqueta::after {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.5;
+}
+
+.seccion-oscura .seccion-etiqueta {
+    color: var(--berme-light);
+}
+
+.seccion-titulo {
+    margin: 0 0 22px;
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(38px, 5vw, 60px);
+    line-height: 1.05;
+    color: inherit;
+}
+
+.seccion-titulo em {
+    font-style: italic;
+    opacity: 0.6;
+}
+
+.seccion-texto {
+    max-width: 720px;
+    margin: 0 0 34px;
+    font-size: 18px;
+    line-height: 1.7;
+    color: #6B5F58;
+}
+
+.seccion-oscura .seccion-texto {
+    color: var(--muted);
+}
+
+.unidades-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.unidad-tarjeta {
+    background: #FFFFFF;
+    border: 1px solid #E8E0D4;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    color: var(--charcoal);
+}
+
+.unidad-tarjeta header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.unidad-tarjeta h3 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.punto-color {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.unidad-datos {
+    margin: 6px 0;
+    font-size: 15px;
+    color: #7A6A62;
+}
+
+.unidad-link {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--berme);
+}
+
+/* ---------- Opiniones (portada) ---------- */
+
+.opiniones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.opinion {
+    margin: 0;
+    padding: 26px;
+    background: #FFFFFF;
+    border: 1px solid #E8E0D4;
+    border-radius: var(--radius-lg);
+    color: var(--charcoal);
+    display: flex;
+    flex-direction: column;
+}
+
+.opinion p {
+    margin: 0 0 14px;
+    line-height: 1.65;
+}
+
+.opinion-estrellas {
+    color: #D9A21B;
+    letter-spacing: 0.15em;
+    font-size: 18px;
+}
+
+.opinion footer {
+    margin-top: auto;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: #7A6A62;
+}
+
+.destacados {
+    columns: 3;
+    column-gap: 40px;
+    margin: 0 0 36px;
+    padding: 0;
+    list-style: none;
+}
+
+.destacados li {
+    padding: 6px 0;
+    break-inside: avoid;
+    color: var(--cream);
+}
+
+.destacados li::before {
+    content: '— ';
+    color: var(--berme-light);
+}
+
+/* ---------- Pie de pagina (en todas las paginas) ---------- */
+
+.pie {
+    padding: 60px 24px 26px;
+    background: #1A0504;
+    color: var(--muted);
+}
+
+.pie-interior {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: auto 1.5fr 1fr;
+    gap: 56px;
+    align-items: start;
+}
+
+/* La calcomania tiene fondo blanco: se muestra como una tarjeta redondeada */
+.pie-logo {
+    display: block;
+    width: 150px;
+    height: 150px;
+    padding: 6px;
+    background: #FFFFFF;
+    border-radius: var(--radius-lg);
+}
+
+.pie-titulo {
+    margin: 0 0 14px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--berme-light);
+}
+
+.pie-direccion {
+    margin: 0 0 20px;
+    line-height: 1.8;
+    font-size: 15px;
+    color: var(--cream);
+}
+
+.pie-redes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.pie a {
+    color: var(--cream);
+    font-size: 14px;
+    letter-spacing: 0.06em;
+}
+
+.pie a:hover {
+    color: var(--berme-light);
+}
+
+.pie-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pie-menu .pie-titulo {
+    margin-bottom: 6px;
+}
+
+.pie-copy {
+    max-width: 1120px;
+    margin: 44px auto 0;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+}
+
+@media (max-width: 760px) {
+    .pie-interior {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+.opiniones-mas {
+    margin: 32px 0 0;
 }
 
 /* ---------- Pantallas chicas ---------- */
@@ -563,6 +1241,24 @@ input[type="submit"]:hover {
     .hero .card .button {
         padding: 10px 14px;
         font-size: 11px;
+    }
+}
+
+@media (max-width: 720px) {
+    .portada {
+        padding-top: 190px;
+    }
+
+    .portada-frase {
+        font-size: 16px;
+    }
+
+    .seccion {
+        padding: 70px 20px;
+    }
+
+    .destacados {
+        columns: 1;
     }
 }
 
