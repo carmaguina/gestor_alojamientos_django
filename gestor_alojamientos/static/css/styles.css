@@ -224,6 +224,26 @@ a:hover {
     line-height: 1.6;
 }
 
+/* ---------- Boton "Volver" ---------- */
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 24px;
+    padding: 9px 20px;
+    border: 1px solid rgba(247, 243, 238, 0.35);
+    color: var(--cream);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: background 0.3s;
+}
+
+.back-link:hover {
+    background: rgba(247, 243, 238, 0.10);
+    color: var(--cream);
+}
+
 /* ---------- Tarjetas y paneles ---------- */
 
 .card-grid {
@@ -244,7 +264,7 @@ a:hover {
 
 /* Tarjetas de la portada: cuadradas, con el contenido centrado */
 .hero .card-grid {
-    grid-template-columns: repeat(2, minmax(0, 360px));
+    grid-template-columns: repeat(auto-fit, minmax(0, 360px));
     justify-content: center;
 }
 
@@ -464,6 +484,29 @@ input[type="submit"]:hover {
     font-style: italic;
 }
 
+/* Pagina "Acerca de": separacion entre secciones y listas en dos columnas */
+.section-gap {
+    margin-top: 20px;
+}
+
+.lista-columnas {
+    columns: 2;
+    column-gap: 40px;
+    margin: 0;
+    padding-left: 20px;
+    line-height: 1.9;
+}
+
+.panel p {
+    line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+    .lista-columnas {
+        columns: 1;
+    }
+}
+
 .detail-list p {
     font-size: 17px;
     line-height: 1.6;
@@ -523,9 +566,9 @@ input[type="submit"]:hover {
     }
 }
 
-/* Celulares (pantalla angosta Y tactil): las tarjetas se apilan, una debajo
-   de la otra. En la PC, aunque achiques la ventana, siguen lado a lado. */
-@media (max-width: 480px) and (pointer: coarse) {
+/* Ventanas o pantallas angostas (celular o ventana chica en la PC):
+   las tarjetas se apilan, una debajo de la otra, a todo el ancho. */
+@media (max-width: 640px) {
     .hero {
         padding-left: 0;
         padding-right: 0;

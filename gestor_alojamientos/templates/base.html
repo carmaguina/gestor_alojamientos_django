@@ -4,7 +4,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Gestor de Alojamientos{% endblock %}</title>
+    <title>{% block title %}Bermellón Suites{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'img/favicon-bs.png' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,6 +45,11 @@
     </header>
 
     <main class="page">
+        {% url 'paginas:inicio' as inicio_url %}
+        {% if request.path != inicio_url %}
+            <a class="back-link" href="{{ inicio_url }}" onclick="if (history.length > 1) { history.back(); return false; }">&larr; Volver</a>
+        {% endif %}
+
         {% block content %}{% endblock %}
     </main>
 </body>

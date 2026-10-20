@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Inicio - Gestor de Alojamientos{% endblock %}
+{% block title %}Inicio - Bermellón Suites{% endblock %}
 
 {% block content %}
     <section class="hero">
@@ -10,20 +10,20 @@
         </h2>
 
         <p>
-            Gestión interna de reservas y disponibilidad de los cuatro
-            departamentos de Bermellón Suites, en Mar Azul.
+            Bienvenidos a Bermellón Suites, tu rincón para descansar en Mar Azul,
+            a solo 250 m de la playa.
         </p>
 
         <div class="card-grid">
             <article class="card">
                 <h3>Unidades</h3>
-                <p>Listado, detalle, busqueda y gestion de alojamientos.</p>
+                <p>Conocé los cuatro departamentos, sus comodidades y su capacidad.</p>
                 <a class="button" href="{% url 'alojamientos:unidad_list' %}">Ver unidades</a>
             </article>
 
             <article class="card">
                 <h3>Contacto</h3>
-                <p>Formulario con validacion para enviar consultas.</p>
+                <p>Escribinos para consultar disponibilidad y tarifas.</p>
                 <a class="button" href="{% url 'paginas:contacto' %}">Contactar</a>
             </article>
         </div>
