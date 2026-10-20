@@ -1,6 +1,6 @@
 ﻿from django.contrib import admin
 
-from .models import Huesped, Reserva
+from .models import Cierre, Huesped, Reserva
 
 
 @admin.action(description="Marcar reservas seleccionadas como señadas")
@@ -37,5 +37,11 @@ class ReservaAdmin(admin.ModelAdmin):
         "huesped__email",
         "unidad__nombre",
     )
-    list_filter = ("estado", "unidad", "fecha_ingreso")
+    list_filter = ("estado", "unidad", "fecha_ingreso", "lleva_mascota")
     actions = [marcar_como_seniadas, marcar_como_canceladas]
+
+
+@admin.register(Cierre)
+class CierreAdmin(admin.ModelAdmin):
+    list_display = ("unidad", "fecha_desde", "fecha_hasta", "motivo")
+    list_filter = ("unidad",)
