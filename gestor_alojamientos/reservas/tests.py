@@ -116,6 +116,14 @@ class ValidacionesReservaTests(TestCase):
         self.nueva(date(2027, 1, 10), date(2027, 1, 17),
                    monto_total=Decimal("1000"), monto_senia=Decimal("500")).full_clean()
 
+    def test_excepcion_de_sena_permite_menos_del_cincuenta(self):
+        self.nueva(date(2027, 1, 10), date(2027, 1, 17),
+                   monto_total=Decimal("1450000"), monto_senia=Decimal("720000"),
+                   excepcion_senia=True).full_clean()
+        with self.assertRaises(ValidationError):
+            self.nueva(date(2027, 1, 10), date(2027, 1, 17),
+                       monto_total=Decimal("1450000"), monto_senia=Decimal("720000")).full_clean()
+
     def test_sena_se_calcula_sobre_el_total_con_descuento(self):
         # total 1000 con 10% de descuento = 900; el 50% es 450
         base = dict(monto_total=Decimal("1000"), descuento_porcentaje=Decimal("10"))

@@ -76,6 +76,11 @@ class Reserva(models.Model):
         default=False,
         help_text="Tildar si son más de 4 personas (hasta 6 adultos).",
     )
+    excepcion_senia = models.BooleanField(
+        "Excepción de seña",
+        default=False,
+        help_text="Tildar si la seña es menor al 50% del total.",
+    )
     # blank=True: el campo puede quedar vacío (solo se llena si hay excepción)
     motivo_excepcion = models.TextField("Motivo de la excepción", blank=True)
 
@@ -174,12 +179,14 @@ class Reserva(models.Model):
                     f"{cierre.fecha_desde:%d/%m/%Y} al {cierre.fecha_hasta:%d/%m/%Y}."
                 )
 
-        # Regla 5: la sena debe ser al menos el 50% del total (con descuento)
+        # Regla 5: la sena debe ser al menos el 50% del total (con descuento),
+        # salvo que este tildada la excepcion de sena.
         total = self.total_final
-        if total is not None and self.monto_senia is not None:
+        if total is not None and self.monto_senia is not None and not self.excepcion_senia:
             if self.monto_senia < total / 2:
                 errores["monto_senia"] = (
-                    f"La seña debe ser al menos el 50% del total (${total / 2:,.2f})."
+                    f"La seña debe ser al menos el 50% del total (${total / 2:,.2f}). "
+                    "Si aceptás menos, tildá la excepción de seña."
                 )
 
         if errores:
